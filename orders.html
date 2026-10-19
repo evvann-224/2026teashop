@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>查看目前點餐狀況 - 麥吉 machi machi</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📊</text></svg>">
+</head>
+<body>
+
+  <!-- 頂部功能與導覽列 -->
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="index.html" class="brand-area">
+        <span class="brand-logo-text">machi machi</span>
+        <div class="brand-divider"></div>
+        <span class="brand-title">班級點餐系統</span>
+      </a>
+      <nav class="header-nav">
+        <a href="index.html" class="nav-btn">📝 我要點餐</a>
+        <a href="orders.html" class="nav-btn active">📊 查看點餐狀況</a>
+        <button type="button" class="api-config-btn" id="openSettingsBtn" title="設定 Google Sheet 串接網址">⚙️</button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- 頁面主體 -->
+  <main class="page-container">
+
+    <!-- 第一列：點餐狀況摘要統計看板 -->
+    <section class="page-row" aria-label="第一列：點餐摘要看板">
+      <div class="section-card">
+        <div class="card-header-bar">
+          <div class="card-title-group">
+            <h2>📊 目前點餐彙整儀表板</h2>
+            <span class="badge-tag" id="syncStatusBadge">本機與 Google Sheet 同步</span>
+          </div>
+          <div style="display:flex; gap:10px;">
+            <button type="button" class="toggle-menu-btn" id="btnRefreshOrders">🔄 重新整理資料</button>
+            <button type="button" class="toggle-menu-btn" id="btnExportCsv">📥 匯出 CSV 試算表</button>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="orders-stats-row">
+            <div class="stat-box">
+              <span class="stat-label">總訂購杯數</span>
+              <span class="stat-number" id="statTotalCups">0</span>
+            </div>
+            <div class="stat-box">
+              <span class="stat-label">累積總金額</span>
+              <span class="stat-number" style="color:var(--color-accent);" id="statTotalPrice">NT$ 0</span>
+            </div>
+            <div class="stat-box">
+              <span class="stat-label">參與訂購人數</span>
+              <span class="stat-number" style="color:var(--color-teal);" id="statTotalPeople">0</span>
+            </div>
+            <div class="stat-box">
+              <span class="stat-label">平均單杯價格</span>
+              <span class="stat-number" style="color:var(--color-text-main);" id="statAvgPrice">NT$ 0</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 第二列：品項統計彙整 | 詳細點餐明細 -->
+    <section class="page-row" style="display:grid; grid-template-columns: 0.8fr 1.2fr; gap:24px;" id="ordersDetailRow" aria-label="第二列：品項統計 | 詳細明細">
+      
+      <!-- 左區塊：品項分類統計 (方便團購店家快速叫單) -->
+      <div class="section-card">
+        <div class="card-header-bar">
+          <div class="card-title-group">
+            <h2>📋 各飲品數量統計</h2>
+          </div>
+          <span style="font-size:0.85rem; color:var(--color-text-muted);">叫單專用彙總</span>
+        </div>
+        <div class="card-body">
+          <div id="summaryItemsContainer" style="display:flex; flex-direction:column; gap:10px; max-height:550px; overflow-y:auto;">
+            <div class="empty-list-notice">尚無點餐資料</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 右區塊：詳細學生點餐明細列表 -->
+      <div class="section-card">
+        <div class="card-header-bar">
+          <div class="card-title-group">
+            <h2>👥 學生個別點餐明細</h2>
+          </div>
+          <input type="text" id="filterInput" placeholder="🔍 搜尋姓名或飲品..." style="padding:6px 12px; font-size:0.85rem; border:1px solid var(--color-border); border-radius:15px; outline:none;">
+        </div>
+        <div class="card-body" style="padding:16px;">
+          <div class="orders-table-wrapper">
+            <table class="orders-table">
+              <thead>
+                <tr>
+                  <th>時間</th>
+                  <th>訂購人姓名</th>
+                  <th>飲品名稱</th>
+                  <th>規格</th>
+                  <th>冰塊</th>
+                  <th>甜度</th>
+                  <th>加料 / 客製</th>
+                  <th>數量</th>
+                  <th>單價</th>
+                  <th>小計金額</th>
+                  <th>備註</th>
+                </tr>
+              </thead>
+              <tbody id="ordersTableBody">
+                <tr>
+                  <td colspan="11" style="text-align:center; padding:30px; color:var(--color-text-muted);">
+                    目前尚無點餐資料，請先前往「我要點餐」進行訂購。
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- Google Sheet / Apps Script 設定彈跳視窗 -->
+  <div class="modal-overlay" id="settingsModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">⚙️ Google Sheet 串接設定</h3>
+        <button type="button" class="modal-close-btn" id="closeSettingsModal">&times;</button>
+      </div>
+      <div style="margin-bottom:16px; font-size:0.9rem; color:var(--color-text-muted);">
+        設定 Google Apps Script Web App URL 後，即可即時由 Google Sheet「2026手搖飲點餐記錄」拉取線上資料：
+      </div>
+      <div style="margin-bottom:16px;">
+        <label for="appsScriptUrlInput" class="field-label">Apps Script Web App URL：</label>
+        <input type="url" id="appsScriptUrlInput" class="text-input" placeholder="https://script.google.com/macros/s/.../exec">
+      </div>
+      <div style="display:flex; justify-content:flex-end; gap:10px;">
+        <button type="button" class="toggle-menu-btn" id="btnTestApi">測試連線</button>
+        <button type="button" class="btn-add-to-cart" id="btnSaveSettings" style="flex:none; padding:8px 20px;">儲存設定</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/orders.js"></script>
+</body>
+</html>

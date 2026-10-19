@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>麥吉 machi machi - 班級點餐系統</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧋</text></svg>">
+</head>
+<body>
+
+  <!-- 頂部功能與導覽列 -->
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="index.html" class="brand-area">
+        <span class="brand-logo-text">machi machi</span>
+        <div class="brand-divider"></div>
+        <span class="brand-title">班級點餐系統</span>
+      </a>
+      <nav class="header-nav">
+        <a href="index.html" class="nav-btn active">📝 我要點餐</a>
+        <a href="orders.html" class="nav-btn">📊 查看點餐狀況</a>
+        <button type="button" class="api-config-btn" id="openSettingsBtn" title="設定 Google Sheet 串接網址">⚙️</button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- 核心網頁容器：依序由上而下以「列」排版 -->
+  <main class="page-container">
+
+    <!-- ====================================================================
+         第 1 列：菜單 (顯示 menu.jpg，等比例縮放，不可裁切)
+         ==================================================================== -->
+    <section class="page-row row-1-menu" aria-label="第一列：菜單">
+      <div class="section-card">
+        <div class="card-header-bar">
+          <div class="card-title-group">
+            <h2>📜 門市完整菜單</h2>
+            <span class="badge-tag">machi machi 官方規格</span>
+          </div>
+          <div class="menu-toolbar">
+            <button type="button" class="toggle-menu-btn" id="toggleMenuZoomBtn">🔍 點擊圖片可放大檢視</button>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="menu-view-container">
+            <div class="menu-img-wrapper">
+              <!-- 菜單圖片：等比例縮放，不可裁切 -->
+              <img src="menu.jpg" alt="麥吉 machi machi 門市菜單" id="menuImage" class="menu-img" title="點擊切換等比例放大/縮小" />
+            </div>
+            <div class="menu-toolbar">
+              <span>* 菜單項目現點現萃，圖片嚴格保持等比例完整呈現</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         第 2 列：表單 | 價格 (以 | 符號隔開兩大區塊)
+         ==================================================================== -->
+    <section class="page-row row-2-order-grid" aria-label="第二列：表單 | 價格">
+
+      <!-- 左側區塊：表單 -->
+      <div class="section-card form-block">
+        <div class="card-header-bar">
+          <div class="card-title-group">
+            <h2>📝 點餐表單</h2>
+            <span class="badge-tag">友善選餐</span>
+          </div>
+          <span style="font-size:0.85rem; color:var(--color-text-muted);">所有菜單飲品全數收錄</span>
+        </div>
+        <div class="card-body">
+          <form id="orderForm" class="form-section-content" onsubmit="return false;">
+            
+            <!-- 姓名輸入 (作為餐點識別) -->
+            <div class="customer-name-card">
+              <label for="customerName" class="field-label">
+                👤 訂購人姓名 <span class="required-star">* (必填，餐點識別用)</span>
+              </label>
+              <input type="text" id="customerName" class="text-input" placeholder="請輸入姓名 (例如：王小明 / 12號 陳小華)" required autocomplete="name">
+            </div>
+
+            <!-- 分類篩選籤與搜尋 -->
+            <div class="opt-group">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
+                <label class="opt-title">🧋 選擇飲品類別</label>
+                <input type="text" id="searchDrinkInput" placeholder="🔍 快速搜尋飲品..." style="padding:4px 10px; font-size:0.85rem; border:1px solid var(--color-border); border-radius:15px; outline:none;">
+              </div>
+              <div class="category-tabs" id="categoryTabs">
+                <button type="button" class="cat-tab-btn active" data-cat="all">全部飲品</button>
+                <button type="button" class="cat-tab-btn" data-cat="pure-tea">麥吉現萃純茶</button>
+                <button type="button" class="cat-tab-btn" data-cat="fresh-milk-latte">鮮奶拿鐵</button>
+                <button type="button" class="cat-tab-btn" data-cat="cheese-foam">芝士奶蓋</button>
+                <button type="button" class="cat-tab-btn" data-cat="fresh-fruit">現榨水果</button>
+                <button type="button" class="cat-tab-btn" data-cat="sparkling">波波氣泡</button>
+              </div>
+            </div>
+
+            <!-- 飲品卡片展示區 (友善卡片點選) -->
+            <div class="drink-cards-grid" id="drinkCardsContainer">
+              <!-- 由 JavaScript 動態依據 MENU_DATA 渲染所有項目 -->
+            </div>
+
+            <!-- 當前選定餐點的客製化面板 -->
+            <div class="customizer-box" id="customizerBox">
+              <div class="customizer-header">
+                <div>
+                  <span style="font-size:0.8rem; color:var(--color-text-muted);">目前選擇餐點：</span>
+                  <div class="selected-drink-title" id="activeDrinkName">請由上方點選欲訂購的飲品</div>
+                </div>
+                <div id="activeDrinkBasePrice" style="font-size:1.15rem; font-weight:800; color:var(--color-primary);"></div>
+              </div>
+
+              <!-- 規格尺寸 -->
+              <div class="opt-group" id="sizeOptGroup">
+                <label class="opt-title">規格容量：</label>
+                <div class="pill-options-grid" id="sizeOptions"></div>
+              </div>
+
+              <!-- 溫度與冰塊 -->
+              <div class="opt-group" id="iceOptGroup">
+                <label class="opt-title">
+                  <span>溫度 / 冰塊：</span>
+                  <span class="opt-badge-note" id="iceNotice">Tips: 建議半糖少冰</span>
+                </label>
+                <div class="pill-options-grid" id="iceOptions"></div>
+              </div>
+
+              <!-- 甜度 -->
+              <div class="opt-group" id="sweetOptGroup">
+                <label class="opt-title">
+                  <span>甜度選擇：</span>
+                  <span class="opt-badge-note" id="sweetNotice">可依個人喜好選擇</span>
+                </label>
+                <div class="pill-options-grid" id="sweetOptions"></div>
+              </div>
+
+              <!-- 鮮奶升級選項 -->
+              <div class="opt-group" id="oatMilkGroup" style="display:none;">
+                <label class="opt-title">鮮奶升級：</label>
+                <label class="topping-checkbox-label" style="max-width:260px;">
+                  <span><input type="checkbox" id="oatMilkCheckbox"> 更換為燕麥奶</span>
+                  <strong style="color:var(--color-primary);">+$15</strong>
+                </label>
+              </div>
+
+              <!-- 加料專區 (根據菜單規範動態停用或啟用) -->
+              <div class="opt-group" id="toppingsGroup">
+                <label class="opt-title">
+                  <span>加料選項：</span>
+                  <span class="opt-badge-note" id="toppingsNotice">可多選配料</span>
+                </label>
+                <div class="toppings-grid" id="toppingsContainer"></div>
+              </div>
+
+              <!-- 備註輸入 -->
+              <div class="opt-group">
+                <label class="opt-title" for="itemNote">自訂備註說明 (選填)：</label>
+                <input type="text" id="itemNote" class="text-input" placeholder="例如：自備環保杯、珍珠另外裝等" style="padding:8px 12px; font-size:0.9rem;">
+              </div>
+
+              <!-- 數量與加入清單 -->
+              <div class="qty-and-add-row">
+                <div class="qty-counter">
+                  <button type="button" class="qty-btn" id="btnMinusQty">-</button>
+                  <input type="text" id="inputQty" class="qty-number" value="1" readonly>
+                  <button type="button" class="qty-btn" id="btnPlusQty">+</button>
+                </div>
+                <button type="button" class="btn-add-to-cart" id="btnAddToCart">
+                  🛒 加入點餐清單 (<span id="btnCurrentItemSubtotal">$0</span>)
+                </button>
+              </div>
+            </div>
+
+          </form>
+        </div>
+      </div>
+
+      <!-- 右側區塊：價格 -->
+      <div class="section-card price-block">
+        <div class="card-header-bar">
+          <div class="card-title-group">
+            <h2>💰 價格結算與送出</h2>
+            <span class="badge-tag">即時計算</span>
+          </div>
+          <button type="button" class="toggle-menu-btn" id="btnClearCartBtn" style="font-size:0.75rem;">清空清單</button>
+        </div>
+        <div class="card-body price-section-content">
+          
+          <!-- 單杯價格即時明細 -->
+          <div class="live-calc-box">
+            <div class="calc-title">即時單杯金額試算</div>
+            <div class="calc-row">
+              <span id="calcItemNameDisplay">尚未選擇飲品</span>
+              <span id="calcBasePriceDisplay">$0</span>
+            </div>
+            <div class="calc-row" id="calcOatMilkRow" style="display:none;">
+              <span>燕麥奶升級</span>
+              <span>+$15</span>
+            </div>
+            <div class="calc-row" id="calcToppingsRow" style="display:none;">
+              <span id="calcToppingsNames">加料</span>
+              <span id="calcToppingsPrice">+$0</span>
+            </div>
+            <div class="calc-row">
+              <span>數量</span>
+              <span id="calcQtyDisplay">x 1</span>
+            </div>
+            <div class="calc-row total-row">
+              <span>目前品項小計</span>
+              <span id="calcItemSubtotalDisplay">$0</span>
+            </div>
+          </div>
+
+          <!-- 已加入之點餐清單明細 -->
+          <div class="order-list-box">
+            <div class="order-list-header">
+              <span>📋 待送出點餐清單</span>
+              <span id="cartCountBadge" style="font-size:0.85rem; color:var(--color-primary); font-weight:700;">共 0 杯</span>
+            </div>
+            <div id="cartItemsContainer">
+              <div class="empty-list-notice">
+                目前清單尚無飲品<br>請在左側選取品項並點擊「加入點餐清單」
+              </div>
+            </div>
+          </div>
+
+          <!-- 總金額大看板 (送出時必須將此價格一起送出) -->
+          <div class="grand-total-banner">
+            <div class="grand-total-top">
+              <span>訂單即時總金額 (含所有加料)</span>
+              <span id="grandTotalCupText">0 杯</span>
+            </div>
+            <div class="grand-total-value">
+              <span>NT$</span>
+              <span class="big-price" id="grandTotalPrice">0</span>
+            </div>
+            
+            <!-- 表單送出按鈕：送出時必須將此價格一起送出至 Google Sheet -->
+            <button type="button" class="btn-submit-order" id="btnSubmitOrder">
+              <span>📤 確認並送出點餐記錄</span>
+            </button>
+          </div>
+
+          <div style="font-size:0.8rem; color:var(--color-text-muted); text-align:center; line-height:1.4;">
+            * 點擊送出後將同步即時價格存入 Google Sheet「2026手搖飲點餐記錄」
+          </div>
+
+        </div>
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- Google Sheet / Apps Script 設定彈跳視窗 -->
+  <div class="modal-overlay" id="settingsModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">⚙️ Google Sheet 串接設定</h3>
+        <button type="button" class="modal-close-btn" id="closeSettingsModal">&times;</button>
+      </div>
+      <div style="margin-bottom:16px; font-size:0.9rem; color:var(--color-text-muted);">
+        請貼上於 Google Sheet 部署 Apps Script 取得的「網頁應用程式網址 (Web App URL)」：
+      </div>
+      <div style="margin-bottom:16px;">
+        <label for="appsScriptUrlInput" class="field-label">Apps Script Web App URL：</label>
+        <input type="url" id="appsScriptUrlInput" class="text-input" placeholder="https://script.google.com/macros/s/.../exec">
+      </div>
+      <div style="display:flex; justify-content:flex-end; gap:10px;">
+        <button type="button" class="toggle-menu-btn" id="btnTestApi">測試連線</button>
+        <button type="button" class="btn-add-to-cart" id="btnSaveSettings" style="flex:none; padding:8px 20px;">儲存設定</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 載入腳本 -->
+  <script src="js/menu-data.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

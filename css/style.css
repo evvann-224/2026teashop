@@ -1,0 +1,959 @@
+/* ==========================================================================
+   麥吉 machi machi 風格主題樣式
+   簡約、明亮、溫潤米白與手搖茶飲色調
+   ========================================================================== */
+
+:root {
+  --color-bg: #FAF7F2;
+  --color-card-bg: #FFFFFF;
+  --color-text-main: #2C2523;
+  --color-text-muted: #796E65;
+  --color-primary: #B84A39;       /* 麥吉磚紅 */
+  --color-primary-hover: #9E3C2D;
+  --color-primary-light: #FBF1ED;
+  --color-accent: #E58E37;        /* 暖茶橘 */
+  --color-accent-light: #FDF4EB;
+  --color-teal: #3B7A77;          /* 綠茶/奶蓋青 */
+  --color-border: #E8E0D5;
+  --color-border-light: #F1ECE4;
+  --shadow-sm: 0 2px 8px rgba(44, 37, 35, 0.04);
+  --shadow-md: 0 6px 20px rgba(44, 37, 35, 0.08);
+  --shadow-lg: 0 12px 32px rgba(44, 37, 35, 0.12);
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-family);
+  background-color: var(--color-bg);
+  color: var(--color-text-main);
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+/* 頂部導航列 */
+.site-header {
+  background-color: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--color-border);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: var(--shadow-sm);
+}
+
+.header-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 14px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.brand-area {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  color: inherit;
+}
+
+.brand-logo-text {
+  font-family: "Georgia", serif;
+  font-weight: bold;
+  font-size: 1.5rem;
+  letter-spacing: 1px;
+  color: var(--color-text-main);
+}
+
+.brand-divider {
+  width: 1px;
+  height: 24px;
+  background-color: var(--color-border);
+}
+
+.brand-title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--color-primary);
+}
+
+.header-nav {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.nav-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 18px;
+  border-radius: 30px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  text-decoration: none;
+  color: var(--color-text-muted);
+  background-color: transparent;
+  transition: all 0.2s ease;
+  border: 1px solid transparent;
+}
+
+.nav-btn:hover {
+  color: var(--color-primary);
+  background-color: var(--color-primary-light);
+}
+
+.nav-btn.active {
+  color: #FFFFFF;
+  background-color: var(--color-primary);
+}
+
+.api-config-btn {
+  background-color: #F3EFEA;
+  color: var(--color-text-muted);
+  border-radius: 50%;
+  width: 38px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--color-border);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.api-config-btn:hover {
+  background-color: #E8E0D5;
+  color: var(--color-text-main);
+}
+
+/* 主頁面容器 (以列排版) */
+.page-container {
+  max-width: 1280px;
+  margin: 28px auto;
+  padding: 0 20px 60px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px; /* 各列之間的間距 */
+}
+
+/* 列 (Page Row) 通用樣式 */
+.page-row {
+  width: 100%;
+}
+
+/* 區塊卡片通透樣式 */
+.section-card {
+  background-color: var(--color-card-bg);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+  transition: box-shadow 0.2s ease;
+}
+
+.section-card:hover {
+  box-shadow: var(--shadow-md);
+}
+
+.card-header-bar {
+  padding: 18px 24px;
+  background: linear-gradient(to right, #FFFDFB, #FAF7F2);
+  border-bottom: 1px solid var(--color-border-light);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.card-title-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.card-title-group h2 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--color-text-main);
+}
+
+.badge-tag {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  background-color: var(--color-primary-light);
+  color: var(--color-primary);
+}
+
+.card-body {
+  padding: 24px;
+}
+
+/* ==========================================================================
+   第 1 列：菜單 (等比例縮放，不可裁切)
+   ========================================================================== */
+.row-1-menu .menu-view-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #F8F5EF;
+  padding: 20px;
+  border-radius: var(--radius-md);
+}
+
+.menu-img-wrapper {
+  width: 100%;
+  max-width: 820px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  background-color: #FFFFFF;
+  padding: 12px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-sm);
+}
+
+/* 菜單圖片：嚴格等比例縮放，不可裁切 */
+.menu-img {
+  width: 100%;
+  height: auto;
+  max-height: 80vh;
+  object-fit: contain;
+  display: block;
+  border-radius: var(--radius-sm);
+  transition: transform 0.25s ease;
+  cursor: zoom-in;
+}
+
+.menu-toolbar {
+  margin-top: 12px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 0.88rem;
+  color: var(--color-text-muted);
+}
+
+.toggle-menu-btn {
+  background-color: #FFFFFF;
+  border: 1px solid var(--color-border);
+  border-radius: 20px;
+  padding: 6px 14px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  color: var(--color-text-main);
+  transition: all 0.2s;
+}
+
+.toggle-menu-btn:hover {
+  background-color: var(--color-primary-light);
+  color: var(--color-primary);
+}
+
+/* ==========================================================================
+   第 2 列：表單 | 價格 (左右兩大區塊)
+   ========================================================================== */
+.row-2-order-grid {
+  display: grid;
+  grid-template-columns: 1.35fr 0.95fr; /* 表單 | 價格 */
+  gap: 24px;
+  align-items: start;
+}
+
+/* 左區塊：表單 */
+.form-section-content {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* 輸入姓名區塊 */
+.customer-name-card {
+  background-color: var(--color-primary-light);
+  border: 1px solid #F2DDD5;
+  border-radius: var(--radius-md);
+  padding: 16px 20px;
+}
+
+.field-label {
+  display: block;
+  font-size: 0.95rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+  color: var(--color-text-main);
+}
+
+.required-star {
+  color: var(--color-primary);
+  margin-left: 4px;
+}
+
+.text-input {
+  width: 100%;
+  padding: 12px 16px;
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-md);
+  font-size: 1rem;
+  background-color: #FFFFFF;
+  color: var(--color-text-main);
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.text-input:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(184, 74, 57, 0.15);
+}
+
+/* 分類快速切換籤 (友善餐點選擇) */
+.category-tabs {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 6px;
+  scrollbar-width: thin;
+}
+
+.cat-tab-btn {
+  white-space: nowrap;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 0.92rem;
+  font-weight: 600;
+  background-color: #F4EFEB;
+  border: 1px solid transparent;
+  color: var(--color-text-muted);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.cat-tab-btn:hover {
+  background-color: #EBE3DB;
+  color: var(--color-text-main);
+}
+
+.cat-tab-btn.active {
+  background-color: var(--color-text-main);
+  color: #FFFFFF;
+}
+
+/* 飲料卡片清單 */
+.drink-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 14px;
+  max-height: 480px;
+  overflow-y: auto;
+  padding-right: 6px;
+}
+
+.drink-card {
+  background-color: #FFFFFF;
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 14px 16px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+}
+
+.drink-card:hover {
+  border-color: var(--color-accent);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-sm);
+}
+
+.drink-card.selected {
+  border-color: var(--color-primary);
+  background-color: #FFFDFD;
+  box-shadow: 0 0 0 2px var(--color-primary);
+}
+
+.drink-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 6px;
+}
+
+.drink-name {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--color-text-main);
+}
+
+.drink-tags {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+
+.mini-tag {
+  font-size: 0.72rem;
+  padding: 2px 6px;
+  border-radius: 6px;
+  background-color: #F0ECE6;
+  color: var(--color-text-muted);
+}
+
+.mini-tag.hot {
+  background-color: #FDF0ED;
+  color: var(--color-primary);
+}
+
+.mini-tag.star {
+  background-color: #FEF7E8;
+  color: var(--color-accent);
+}
+
+.drink-desc {
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+  margin-bottom: 10px;
+  line-height: 1.4;
+}
+
+.drink-price-line {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px dashed var(--color-border-light);
+  padding-top: 8px;
+  margin-top: auto;
+}
+
+.drink-default-size {
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+}
+
+.drink-price {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: var(--color-primary);
+}
+
+/* 客製化配置面板 (當選定飲料時展開) */
+.customizer-box {
+  background-color: #FAF8F5;
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.customizer-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--color-border);
+  padding-bottom: 10px;
+}
+
+.selected-drink-title {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: var(--color-primary);
+}
+
+.opt-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.opt-title {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--color-text-main);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.opt-badge-note {
+  font-size: 0.78rem;
+  font-weight: normal;
+  color: var(--color-text-muted);
+}
+
+.pill-options-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.pill-radio-label {
+  position: relative;
+  cursor: pointer;
+}
+
+.pill-radio-label input {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.pill-btn {
+  display: inline-flex;
+  align-items: center;
+  padding: 7px 14px;
+  border-radius: 20px;
+  background-color: #FFFFFF;
+  border: 1px solid var(--color-border);
+  font-size: 0.88rem;
+  color: var(--color-text-main);
+  transition: all 0.2s;
+  user-select: none;
+}
+
+.pill-radio-label input:checked + .pill-btn {
+  background-color: var(--color-primary);
+  border-color: var(--color-primary);
+  color: #FFFFFF;
+  font-weight: 600;
+}
+
+.pill-btn.locked {
+  background-color: #EDE8E1;
+  color: #8C847D;
+  border-style: dashed;
+  cursor: not-allowed;
+}
+
+/* 加料多選按鈕 */
+.toppings-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  gap: 8px;
+}
+
+.topping-checkbox-label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  background-color: #FFFFFF;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  font-size: 0.88rem;
+  transition: all 0.2s;
+}
+
+.topping-checkbox-label.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  background-color: #F4EFEB;
+}
+
+.topping-checkbox-label input {
+  margin-right: 6px;
+  accent-color: var(--color-primary);
+}
+
+/* 數量選擇與加入按鈕 */
+.qty-and-add-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: 8px;
+  padding-top: 14px;
+  border-top: 1px solid var(--color-border);
+}
+
+.qty-counter {
+  display: flex;
+  align-items: center;
+  border: 1.5px solid var(--color-border);
+  border-radius: 24px;
+  background-color: #FFFFFF;
+  overflow: hidden;
+}
+
+.qty-btn {
+  width: 38px;
+  height: 38px;
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  font-weight: bold;
+  cursor: pointer;
+  color: var(--color-text-main);
+  transition: background-color 0.2s;
+}
+
+.qty-btn:hover {
+  background-color: #F4EFEB;
+}
+
+.qty-number {
+  width: 44px;
+  text-align: center;
+  font-size: 1.05rem;
+  font-weight: 700;
+  border: none;
+  outline: none;
+}
+
+.btn-add-to-cart {
+  flex: 1;
+  padding: 12px 20px;
+  border-radius: 24px;
+  background-color: var(--color-accent);
+  color: #FFFFFF;
+  border: none;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 12px rgba(229, 142, 55, 0.25);
+}
+
+.btn-add-to-cart:hover {
+  background-color: #CF7A27;
+  transform: translateY(-1px);
+}
+
+/* ==========================================================================
+   右區塊：價格結算與送出
+   ========================================================================== */
+.price-section-content {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  position: sticky;
+  top: 90px;
+}
+
+/* 當前選擇即時試算 */
+.live-calc-box {
+  background-color: #FAF6F0;
+  border-radius: var(--radius-md);
+  border: 1px dashed var(--color-border);
+  padding: 18px;
+}
+
+.calc-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+  color: var(--color-text-muted);
+}
+
+.calc-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 6px;
+  font-size: 0.92rem;
+}
+
+.calc-row.total-row {
+  border-top: 1.5px solid var(--color-border);
+  padding-top: 10px;
+  margin-top: 8px;
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: var(--color-primary);
+}
+
+.big-price {
+  font-size: 1.8rem;
+  font-weight: 900;
+}
+
+/* 點餐清單 (購物車列表) */
+.order-list-box {
+  background-color: #FFFFFF;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 16px;
+  max-height: 320px;
+  overflow-y: auto;
+}
+
+.order-list-header {
+  font-size: 0.95rem;
+  font-weight: 700;
+  margin-bottom: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.empty-list-notice {
+  text-align: center;
+  padding: 24px 10px;
+  color: var(--color-text-muted);
+  font-size: 0.92rem;
+}
+
+.order-item-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--color-border-light);
+}
+
+.order-item-row:last-child {
+  border-bottom: none;
+}
+
+.item-info-main {
+  flex: 1;
+}
+
+.item-name-size {
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--color-text-main);
+}
+
+.item-spec-tags {
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+  margin-top: 2px;
+}
+
+.item-qty-price {
+  text-align: right;
+  margin-left: 12px;
+}
+
+.item-total-cost {
+  font-weight: 700;
+  color: var(--color-primary);
+}
+
+.btn-remove-item {
+  background: none;
+  border: none;
+  color: #C0AFA6;
+  cursor: pointer;
+  padding: 2px 6px;
+  font-size: 0.85rem;
+  transition: color 0.2s;
+}
+
+.btn-remove-item:hover {
+  color: #D9534F;
+}
+
+/* 送出總金額大看板 */
+.grand-total-banner {
+  background: linear-gradient(135deg, #3A2E2B 0%, #221A18 100%);
+  color: #FFFFFF;
+  padding: 20px;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-md);
+}
+
+.grand-total-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.95rem;
+  opacity: 0.85;
+}
+
+.grand-total-value {
+  font-size: 2.2rem;
+  font-weight: 900;
+  color: #F8B153;
+  margin: 6px 0 16px 0;
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+}
+
+.grand-total-value span {
+  font-size: 1.1rem;
+}
+
+/* 表單送出按鈕 (必須連同即時價格一起送出) */
+.btn-submit-order {
+  width: 100%;
+  padding: 16px;
+  border-radius: 30px;
+  background-color: var(--color-primary);
+  color: #FFFFFF;
+  border: none;
+  font-size: 1.15rem;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: 0 4px 16px rgba(184, 74, 57, 0.35);
+  transition: all 0.2s ease;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn-submit-order:hover {
+  background-color: var(--color-primary-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(184, 74, 57, 0.45);
+}
+
+.btn-submit-order:disabled {
+  background-color: #B8ADA8;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* ==========================================================================
+   查看點餐狀況網頁 (orders.html) 專用樣式
+   ========================================================================== */
+.orders-stats-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+}
+
+.stat-box {
+  background-color: #FFFFFF;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  box-shadow: var(--shadow-sm);
+}
+
+.stat-label {
+  font-size: 0.9rem;
+  color: var(--color-text-muted);
+  font-weight: 600;
+}
+
+.stat-number {
+  font-size: 2.2rem;
+  font-weight: 900;
+  color: var(--color-primary);
+}
+
+.orders-table-wrapper {
+  overflow-x: auto;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+}
+
+.orders-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 0.92rem;
+  background-color: #FFFFFF;
+}
+
+.orders-table th {
+  background-color: #3A2E2B;
+  color: #FFFFFF;
+  font-weight: 700;
+  padding: 14px 16px;
+  white-space: nowrap;
+}
+
+.orders-table td {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--color-border-light);
+  color: var(--color-text-main);
+}
+
+.orders-table tr:hover {
+  background-color: #FAF7F2;
+}
+
+/* 彈出視窗 Modal */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(30, 24, 22, 0.6);
+  backdrop-filter: blur(4px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+}
+
+.modal-overlay.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.modal-content {
+  background-color: #FFFFFF;
+  border-radius: var(--radius-lg);
+  max-width: 520px;
+  width: 90%;
+  padding: 28px;
+  box-shadow: var(--shadow-lg);
+  position: relative;
+  transform: translateY(20px);
+  transition: transform 0.25s ease;
+}
+
+.modal-overlay.active .modal-content {
+  transform: translateY(0);
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 18px;
+}
+
+.modal-title {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--color-text-main);
+}
+
+.modal-close-btn {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: var(--color-text-muted);
+}
+
+/* 響應式微調 */
+@media (max-width: 900px) {
+  .row-2-order-grid {
+    grid-template-columns: 1fr; /* 小螢幕順序向下呈現 表單 -> 價格 */
+  }
+
+  .price-section-content {
+    position: static;
+  }
+}

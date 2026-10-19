@@ -1,0 +1,5 @@
+# 依據規範，不推送 spec / spce 資料夾
+spce/
+spec/
+.DS_Store
+Thumbs.db
