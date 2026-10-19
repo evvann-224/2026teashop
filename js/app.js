@@ -463,6 +463,38 @@ function initOrderForm() {
   if (btnSubmitOrder) {
     btnSubmitOrder.addEventListener("click", submitOrder);
   }
+
+  // 一鍵填入測試訂單按鈕 (供驗證用)
+  const btnFillDemo = document.getElementById("btnFillDemoOrder");
+  let demoToggle = 0;
+  if (btnFillDemo) {
+    btnFillDemo.addEventListener("click", () => {
+      const nameInput = document.getElementById("customerName");
+      if (demoToggle % 2 === 0) {
+        if (nameInput) nameInput.value = "王小明";
+        const blackTea = MENU_DATA[0].items[0]; // 日月潭紅茶
+        selectDrink(blackTea);
+        // 勾選珍珠
+        const pearlChk = document.querySelector("#toppingsContainer input[value='白玉珍珠']");
+        if (pearlChk) {
+          pearlChk.checked = true;
+          recalculateSelectedToppings();
+          updateLiveCalculation();
+        }
+      } else {
+        if (nameInput) nameInput.value = "李小華";
+        const bruleeLatte = MENU_DATA[1].items.find(i => i.name.includes("烤布蕾"));
+        if (bruleeLatte) selectDrink(bruleeLatte);
+        const qtyInput = document.getElementById("inputQty");
+        if (qtyInput) {
+          qtyInput.value = 2;
+          currentCustomization.quantity = 2;
+          updateLiveCalculation();
+        }
+      }
+      demoToggle++;
+    });
+  }
 }
 
 /**

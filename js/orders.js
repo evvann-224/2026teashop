@@ -58,6 +58,41 @@ async function loadOrders() {
     }
   }
 
+  // 若仍無資料，注入兩筆符合規範的測試訂單
+  if (!orders || orders.length === 0) {
+    orders = [
+      {
+        id: 1,
+        timestamp: "2026/10/19 16:20:00",
+        customerName: "王小明",
+        drinkName: "日月潭紅茶",
+        size: "L",
+        ice: "少冰",
+        sweetness: "五分糖",
+        toppings: "白玉珍珠(+$10)",
+        quantity: 1,
+        unitPrice: 55,
+        totalPrice: 55,
+        note: "自備環保杯"
+      },
+      {
+        id: 2,
+        timestamp: "2026/10/19 16:22:30",
+        customerName: "李小華",
+        drinkName: "烤布蕾紅茶拿鐵",
+        size: "M",
+        ice: "去冰",
+        sweetness: "三分糖",
+        toppings: "無",
+        quantity: 2,
+        unitPrice: 80,
+        totalPrice: 160,
+        note: "無"
+      }
+    ];
+    localStorage.setItem(LOCAL_STORAGE_ORDERS_KEY, JSON.stringify(orders));
+  }
+
   currentOrdersList = orders;
   renderDashboard(orders);
 }
