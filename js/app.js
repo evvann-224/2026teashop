@@ -1,6 +1,7 @@
 // 麥吉點餐系統 - 前端互動與價格即時計算主邏輯
 
 // 預設 Google Apps Script Web App URL (可從 localStorage 讀取或設定)
+const DEFAULT_GAS_URL = "https://script.google.com/macros/s/AKfycbyvhfoq91wfOBgdNSMIuM0nJieSiaT9t1QBXH6iTSa_XBliMOUfQsr4vFPRci-oaQyH/exec";
 const DEFAULT_SCRIPT_URL_KEY = "machi_orders_gas_url";
 const LOCAL_STORAGE_ORDERS_KEY = "machi_orders_data";
 
@@ -807,7 +808,7 @@ function saveToLocalStorage(newItems) {
  * 取得 Google Apps Script 部署 URL
  */
 function getGasUrl() {
-  return localStorage.getItem(DEFAULT_SCRIPT_URL_KEY) || "";
+  return localStorage.getItem(DEFAULT_SCRIPT_URL_KEY) || DEFAULT_GAS_URL;
 }
 
 /**

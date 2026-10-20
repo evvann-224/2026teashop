@@ -1,5 +1,6 @@
 // 麥吉點餐系統 - 查看點餐狀況與統計邏輯
 
+const DEFAULT_GAS_URL = "https://script.google.com/macros/s/AKfycbyvhfoq91wfOBgdNSMIuM0nJieSiaT9t1QBXH6iTSa_XBliMOUfQsr4vFPRci-oaQyH/exec";
 const DEFAULT_SCRIPT_URL_KEY = "machi_orders_gas_url";
 const LOCAL_STORAGE_ORDERS_KEY = "machi_orders_data";
 
@@ -17,7 +18,7 @@ document.addEventListener("DOMContentLoaded", () => {
  */
 async function loadOrders() {
   const syncBadge = document.getElementById("syncStatusBadge");
-  const gasUrl = localStorage.getItem(DEFAULT_SCRIPT_URL_KEY);
+  const gasUrl = localStorage.getItem(DEFAULT_SCRIPT_URL_KEY) || DEFAULT_GAS_URL;
 
   let orders = [];
 

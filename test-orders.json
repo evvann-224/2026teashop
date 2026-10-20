@@ -1,0 +1,28 @@
+[
+  {
+    "timestamp": "2026/10/20 09:15:00",
+    "customerName": "王小明",
+    "drinkName": "日月潭紅茶",
+    "size": "L",
+    "ice": "少冰",
+    "sweetness": "五分糖",
+    "toppings": "白玉珍珠(+$10)",
+    "quantity": 1,
+    "unitPrice": 55,
+    "totalPrice": 55,
+    "note": "自備環保杯"
+  },
+  {
+    "timestamp": "2026/10/20 09:16:30",
+    "customerName": "李小華",
+    "drinkName": "烤布蕾紅茶拿鐵",
+    "size": "M",
+    "ice": "去冰",
+    "sweetness": "三分糖",
+    "toppings": "無",
+    "quantity": 2,
+    "unitPrice": 80,
+    "totalPrice": 160,
+    "note": "熱門招牌"
+  }
+]

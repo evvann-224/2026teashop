@@ -3,6 +3,9 @@
 本專案依據官方菜單（`menu.jpg`）規格量身打造，專為班級學生點飲料而設計的純前端響應式 Web 點餐系統。設計風格嚴格遵循菜單色系（溫潤米白、手搖茶飲色調），簡單、明亮、文青質感。
 
 🌐 **GitHub Pages 網址**：[https://evvann-224.github.io/2026teashop/](https://evvann-224.github.io/2026teashop/)
+📊 **查看目前點餐狀況**：[https://evvann-224.github.io/2026teashop/orders.html](https://evvann-224.github.io/2026teashop/orders.html)
+⚡ **已串接之 Google Apps Script Web App 端點**：
+`https://script.google.com/macros/s/AKfycbyvhfoq91wfOBgdNSMIuM0nJieSiaT9t1QBXH6iTSa_XBliMOUfQsr4vFPRci-oaQyH/exec`
 
 ---
 
@@ -63,3 +66,4 @@
    - 測試訂單一：王小明 - 日月潭紅茶 (L / 少冰 / 半糖 / 加白玉珍珠) $55 x 1
    - 測試訂單二：李小華 - 烤布蕾紅茶拿鐵 (M / 去冰 / 微糖) $80 x 2
    - 資料正確存入並於 `orders.html` 彙整統計！
+
